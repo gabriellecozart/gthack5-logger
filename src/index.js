@@ -1,32 +1,111 @@
-var path = require('path'),
-express = require('express'),
-bodyParser = require('body-parser');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
 
-/* Require our API controller */
-var controller = require('./controller');
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
+}
 
-/* Start our Express web server*/
-var app = express();
+class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+      xIsNext: true,
+    };
+  }
 
-//some nerd stuff that sets your server port and lets you read POST requests with a JSON payload
-app.set('port', process.env.PORT || 8080);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    });
+  }
 
+  renderSquare(i) {
+    return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)}/>;
+  }
 
-//lets us access the files in our `public` folder, so going to http://yourwebsite.com/ will open index.html, located in the `public` folder
-app.use(express.static(path.join(__dirname, 'public')));
+  render() {
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
 
-//when the user makes a get request to http://yourwebsite.com/api, they'll get a secret page!
-app.post('/api/add/tree', controller.addTree);
+    return (
+      <div>
+        <div className="status">{status}</div>
+        <div className="board-row">
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
+        </div>
+      </div>
+    );
+  }
+}
 
+class Game extends React.Component {
+  render() {
+    return (
+      <div className="game">
+        <div className="game-board">
+          <Board />
+        </div>
+        <div className="game-info">
+          <div>{/* status */}</div>
+          <ol>{/* TODO */}</ol>
+        </div>
+      </div>
+    );
+  }
+}
 
-//starts the app on the port we defined earlier
-//kill the app with ctrl-c in the terminal
-//to actually run the app tho, run `node index.js`
-app.listen(app.get('port'), function() {
-	console.log('App is running at http://localhost:%d', app.get('port')); 
-	console.log('  Press CTRL-C to stop\n');
-});
+// ========================================
 
-module.exports = app;
+ReactDOM.render(
+  <Game />,
+  document.getElementById('root')
+);
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
