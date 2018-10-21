@@ -17,8 +17,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //lets us access the files in our `public` folder, so going to http://yourwebsite.com/ will open index.html, located in the `public` folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-//when the user makes a get request to http://yourwebsite.com/api, they'll get a secret page!
+//add the tree!
 app.post('/api/add/tree', controller.addTree);
+
+//add the user!
+app.post('/api/add/user', controller.addUser);
+
+app.get('/api/getTrees', controller.getTrees);
+
+app.post('/api/authenticate', controller.authenticate);
 
 
 //starts the app on the port we defined earlier
