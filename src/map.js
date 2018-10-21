@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 
 export class MapContainer extends Component {
     constructor(){
@@ -11,6 +10,14 @@ export class MapContainer extends Component {
             selectedPlace: {},
             trees: []
         }
+    }
+    componentDidMount(){
+        this.setState({
+          trees: [
+              {lat: 33.8, lng: -84.396, planter:'Cameron', name:'Cool tree', icon: 'http://maps.google.com/mapfiles/ms/micons/tree.png'},
+              {lat: 33.8, lng: -84.392, planter:'Randy', name:'Lame tree'},
+              {lat: 33.8, lng: -84.398, planter:'Sarah', name:'Yeah uh'},],
+        });
     }
 
     onMarkerClick = (props, marker, e) =>
@@ -36,26 +43,22 @@ export class MapContainer extends Component {
               onClick={this.onMapClicked}
               initialCenter={{
                 lat: 33.775, //Georgia Tech's campus
-                lng: -84.396}}
+                lng: -84.396}} 
               zoom={15}>
-            <Marker
-              onClick={this.onMarkerClick}
-              planter={'Cameron'}
-              name={'Cool tree'}
-              icon={'http://maps.google.com/mapfiles/ms/micons/tree.png'}
-              position={{lat: 33.775, lng: -84.396}} />
-            <Marker
-              onClick={this.onMarkerClick}
-              planter={'Randy'}
-              name={'Lame tree'}
-              icon={'http://maps.google.com/mapfiles/ms/micons/tree.png'}
-              position={{lat: 33.77, lng: -84.392}} />
-            <Marker
-              onClick={this.onMarkerClick}
-              planter={'Sarah'}
-              name={'Yeah uh'}
-              icon={'http://maps.google.com/mapfiles/ms/micons/tree.png'}
-              position={{lat: 33.773, lng: -84.398}} />
+
+            {this.state.trees.map((trees, i) =>{
+              return(
+                <Marker
+                  onClick={this.onMarkerClick}
+                  icon={trees.icon}
+                  lat={trees.lat}
+                  lng={trees.lng}
+                  name={trees.name}
+                  planter={trees.planter}
+                />
+              )
+            })} 
+            
 
             <InfoWindow
               marker={this.state.activeMarker}
