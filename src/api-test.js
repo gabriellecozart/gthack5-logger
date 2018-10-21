@@ -17,7 +17,7 @@ class View extends React.Component {
   }
   
   handleChange (event) {
-    // check it out: we get the event.target.name (which will be either "treeNam" or "treeType")
+    // check it out: we get the event.target.name (which will be either "treeName" or "treeType")
     // and use it to target the key on our `state` object with the same name, using bracket syntax
     this.setState({ [event.target.name]: event.target.value });
   }
