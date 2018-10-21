@@ -23,6 +23,7 @@ module.exports.addTree = function (req, res) {
 /* Return an array of all trees */
 module.exports.getTrees = function (req, res) {
     Listing.find({}, 'treeName treeType coordinates created_at', function(err, trees) {
+        
         if (err) {
             console.log(err);
             res.status(500).send("Error retrieving your trees!")
