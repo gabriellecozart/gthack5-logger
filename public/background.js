@@ -29,7 +29,6 @@ function drawTree(ctx, level)
     /* Create branches for this level */
     for (var branchCount = 0; branchCount < branches; branchCount++)
     {
-        console.log(branches);
         ctx.save();
 
         var degrees = 45 * (branches - 1); // Degrees between the branches!
