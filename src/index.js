@@ -29,7 +29,7 @@ class FrontPageElement extends React.Component{
 
 	handleSubmit (event) {
 		console.log("hello");
-		fetch('http://localhost:8080/api/authenticate', {
+		fetch('/api/authenticate', {
 			mode: 'no-cors',
 			method: 'post',
 			body: JSON.stringify(this.state)
