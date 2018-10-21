@@ -11,9 +11,9 @@ var listingSchema = new Schema({
     treeName: {
         type: String
     },
-    coordinates: {
-        latitude: Number,
-        longitude: Number
+    position: {
+        type:[Number],
+        required: true
     },
     treeType: {
         type: String
