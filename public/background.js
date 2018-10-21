@@ -37,7 +37,7 @@ function drawTree(ctx, level)
         ctx.rotate( -degrees / 2 * ( Math.PI / 180 ) ); // Rotate to draw the branches growing outward!
 
         ctx.lineWidth = 3 * (6 - level); // Thickness of the line should shrink (i.e. root, branch, twig)!
-
+        
         ctx.strokeStyle = 'rgb(0,0,0)'; // The tree should be a black sillhouette
 
         // Draw the line!
