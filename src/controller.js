@@ -49,6 +49,7 @@ module.exports.addUser = function (req, res) {
 
 /* Authenticate a user given username and password */
 module.exports.authenticate = function (req, res) {
+    console.log("Hello!")
     User.find({ userName: req.body.userName, password: req.body.password}, function(err, docs){
         if (err) {
             console.log(err);
