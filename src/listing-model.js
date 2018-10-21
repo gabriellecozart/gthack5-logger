@@ -2,21 +2,21 @@
 var mongoose = require('mongoose'), 
     Schema = mongoose.Schema;
 
-/* Create schema */
+/* Create tree schema */
 var listingSchema = new Schema({
-    treeId: {
+    treeID: {
         type: Number,
         required: true
     },
-    coordinates: {
-        latitude: Number,
-        longitude: Number
-    },
-    name: {
+    treeName: {
         type: String
     },
+    position: {
+        type:[Number],
+        required: true
+    },
     treeType: {
-        type: String,
+        type: String
     },
     created_at: Date,
     updated_at: Date

@@ -1,6 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import styles from './index.css'
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import Map from './map.js'
+
+import Button from "@material-ui/core/Button";
+import SignIn from './SignIn';
+
+ReactDOM.render(
+  <Map />,
+  document.getElementById('root')
+);
 
 class FrontPageElement extends React.Component{
 	constructor()
